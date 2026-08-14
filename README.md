@@ -5,7 +5,7 @@ This repository contains a Google Colab notebook for evaluating Markovian transp
 Main notebook:
 
 ```text
-markovian_anti_fragility_poc.ipynb
+markovian_anti_fragility_poc_FIXED.ipynb
 ```
 
 ## What the Notebook Does
@@ -25,6 +25,188 @@ The notebook:
 - Converts confirmatory figures to PNG.
 - Collects the final figure set.
 - Builds and evaluates an Exgentic agent/tool interaction graph from real execution traces.
+
+
+## Why This Matters for AI
+
+Modern AI systems are increasingly networked rather than isolated.
+
+Examples include:
+
+```text
+multi-agent systems
+tool-using LLMs
+retrieval-augmented generation pipelines
+memory systems
+model-routing architectures
+distributed inference systems
+API and service dependency graphs
+```
+
+In these systems, a node can represent an:
+
+```text
+agent
+model
+tool
+memory service
+retrieval service
+database
+router
+coordinator
+external API
+```
+
+and an edge can represent:
+
+```text
+communication
+delegation
+tool use
+API dependency
+service dependency
+information flow
+```
+
+This notebook studies what happens when links around highly connected components are preferentially disrupted.
+
+That is relevant to AI security because highly connected agents, tools, routers, or services can become important attack surfaces or failure points.
+
+The experiment asks whether a networked system only degrades under targeted disruption, or whether some topologies can show improved stochastic transport after damage.
+
+The Exgentic experiment makes this AI connection concrete by reconstructing a graph from observed LLM-agent execution traces and tool interactions rather than relying only on general-purpose network datasets.
+
+The Exgentic result is intentionally important even though it is negative: the observed agent/tool graph does not satisfy the strict anti-fragility criteria. This shows that the method does not assume that networked AI systems become better under damage and that the effect depends on the actual topology and transport process.
+
+## Important Concepts
+
+### Anti-Fragility
+
+Anti-fragility is stronger than robustness or resilience.
+
+```text
+robustness   -> performance degrades only slightly under stress
+resilience   -> performance recovers after stress
+anti-fragility -> some measured property improves under stress
+```
+
+In this notebook, anti-fragility refers specifically to improved **Markovian transport**, measured by lower average random-walk hitting time after damage.
+
+It does not mean that the full AI system becomes more accurate, safer, or better at completing tasks.
+
+### Markovian Transport
+
+Markovian transport models movement through a graph as a random walk.
+
+A lower average hitting time means that a random walker can reach destinations more quickly on average.
+
+This can be relevant to systems that involve:
+
+```text
+probabilistic delegation
+randomized exploration
+distributed message passing
+stochastic routing
+agent-to-agent information propagation
+```
+
+### Preferential Edge Damage
+
+Preferential damage targets edges connected to highly connected nodes.
+
+The notebook assigns each edge a weight based on the degree of its two endpoints:
+
+```text
+weight = degree(u) + degree(v)
+```
+
+This approximates a topology-aware disruption strategy in which links surrounding central agents, shared tools, routers, or services are more likely to be attacked or disabled.
+
+### Matched Random Damage
+
+Preferential damage is compared with random edge removal using the same number of removed edges.
+
+This helps answer an important question:
+
+```text
+Is the observed response caused by targeted topology-aware damage,
+or would ordinary random failures produce the same behavior?
+```
+
+### Largest Connected Component
+
+After damage, the notebook evaluates the largest connected component.
+
+This is necessary because hitting time is defined on connected graphs.
+
+The notebook also records how much of the original graph remains connected so that an apparent improvement is not mistaken for anti-fragility when the graph has simply collapsed to a tiny residual component.
+
+### Size-Matched Control
+
+A damaged graph can appear faster simply because fewer nodes remain.
+
+To control for this, the notebook compares a preferentially damaged largest connected component with an undamaged connected subgraph from the same original network containing the same number of nodes.
+
+This is one of the key controls in the experiment.
+
+### Independent Trial-Level Inference
+
+The 10%, 20%, 30%, and 40% size-control points come from the same progressive damage trajectory.
+
+They are therefore nested measurements rather than independent experiments.
+
+The notebook averages those values within each trial first and then performs statistical inference across independent trials.
+
+This avoids pseudoreplication.
+
+### Hutchinson Trace Estimation
+
+Average hitting time requires the trace of the Laplacian pseudoinverse.
+
+For large graphs, computing the full pseudoinverse repeatedly is expensive.
+
+The notebook therefore uses a Hutchinson trace estimator with 24 Rademacher probes.
+
+These probes are used only for numerical approximation.
+
+They are not treated as independent experimental trials.
+
+### Global Efficiency
+
+Global efficiency is a shortest-path metric.
+
+It measures how efficiently nodes can reach one another through shortest paths.
+
+This is different from random-walk hitting time.
+
+The notebook compares both because a network can improve under one transport model while getting worse under another.
+
+That distinction is important for AI systems because different architectures may rely on different communication or routing behaviors.
+
+### Topology Dependence
+
+The notebook does not assume that anti-fragility is universal.
+
+Some SNAP networks show controlled improvements in Markovian transport, while others do not.
+
+The Exgentic agent/tool graph also does not show a controlled anti-fragile response.
+
+This means the outcome depends on the structure of the network being evaluated.
+
+### Metric Dependence
+
+The notebook also shows that a favorable random-walk result does not imply improved shortest-path behavior.
+
+In the SNAP experiments, global efficiency generally decreases even when hitting time improves.
+
+Therefore:
+
+```text
+better Markovian transport != better shortest-path efficiency
+```
+
+This is an important distinction when evaluating networked AI systems.
+
 
 ## Notebook Cells
 
@@ -414,3 +596,8 @@ no synthetic graph generators are used
 no empirical outcomes are hardcoded
 ```
 
+## License
+
+Add the repository license of your choice at the root of the repository.
+
+The underlying datasets remain subject to their original source licenses and terms.
