@@ -5,7 +5,7 @@ This repository contains a Google Colab notebook for evaluating Markovian transp
 Main notebook:
 
 ```text
-markovian_anti_fragility_poc_FIXED.ipynb
+markovian_anti_fragility_poc.ipynb
 ```
 
 ## What the Notebook Does
@@ -746,8 +746,3 @@ Real Pi graph edges come only from observed session-tool use and tool transition
 Real Pi figure outputs are PNG only
 ```
 
-## License
-
-Add the repository license of your choice at the root of the repository.
-
-The underlying datasets remain subject to their original source licenses and terms.
