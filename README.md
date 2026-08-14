@@ -9,7 +9,7 @@ This repository accompanies the study:
 The main reproducibility artifact is the Google Colab notebook:
 
 ```text
-markovian_anti_fragility_poc_FIXED.ipynb
+markovian_anti_fragility_poc.ipynb
 ```
 
 The notebook contains the complete experimental workflow in **six executable code cells**. It preserves the original embedded notebook outputs while correcting the inferential treatment of the nested size-control fractions. When rerun, the notebook regenerates the empirical CSV files, LaTeX tables, intermediate PDF figures, final PNG figures, and the Exgentic AI-domain validation outputs.
@@ -1167,8 +1167,6 @@ This notebook is a research artifact.
 
 It is not a production security control.
 
-The topology-aware damage process is a controlled experimental threat model and does not represent every possible adaptive adversary.
-
 The SNAP structural analysis uses static undirected graph representations.
 
 The Exgentic graph is a reconstructed agent/tool interaction topology rather than a full production AI-service architecture.
@@ -1177,43 +1175,3 @@ The results should therefore be interpreted as controlled empirical network-scie
 
 ---
 
-# 42. Final Reproduction Checklist
-
-A complete reproduction should verify:
-
-```text
-[ ] Cell 1 completed
-[ ] six SNAP datasets downloaded
-[ ] dataset_provenance.csv generated
-[ ] real_networks_raw.csv generated
-[ ] size_matched_pair_level.csv generated
-[ ] size_matched_trial_level.csv generated
-[ ] size_matched_controls.csv generated
-[ ] network_summary.csv generated
-
-[ ] Cell 2 completed
-[ ] global_efficiency_raw.csv generated
-[ ] global_efficiency_size_matched_pair_level.csv generated
-[ ] global_efficiency_size_matched_trial_level.csv generated
-[ ] global_efficiency_size_matched_summary.csv generated
-[ ] benchmark_classification.csv generated
-
-[ ] Cell 3 completed
-[ ] structural_correlates_input.csv generated
-[ ] structural_correlates_spearman.csv generated
-
-[ ] Cell 4 completed
-[ ] seven confirmatory PNG files generated
-
-[ ] Cell 5 completed
-[ ] exactly 16 primary/confirmatory article PNG files collected
-
-[ ] Cell 6 completed
-[ ] Exgentic traces processed
-[ ] Exgentic node and edge CSVs generated
-[ ] Exgentic size_matched_trial_level.csv generated
-[ ] Exgentic RESULTS_SUMMARY.txt generated
-[ ] six Exgentic PNG figures generated
-```
-
-The notebook and README are considered aligned when the regenerated trial-level size-control outputs are used for statistical interpretation while all raw pair-level outputs remain available for audit and visualization.
