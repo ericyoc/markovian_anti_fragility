@@ -1,6 +1,6 @@
 # Markovian Antifragility POC
 
-This repository contains a Google Colab notebook for evaluating Markovian transport under progressive edge damage on real network data and an observed agent/tool interaction graph.
+This repository contains a Google Colab notebook for evaluating Markovian transport under progressive edge damage on real network data and two observed AI-agent interaction graphs.
 
 Main notebook:
 
@@ -25,6 +25,7 @@ The notebook:
 - Converts confirmatory figures to PNG.
 - Collects the final figure set.
 - Builds and evaluates an Exgentic agent/tool interaction graph from real execution traces.
+- Builds and evaluates a second AI-domain graph from real Pi coding-agent sessions, using only observed session-tool use and consecutive tool transitions.
 
 
 ## Why This Matters for AI
@@ -74,9 +75,9 @@ That is relevant to AI security because highly connected agents, tools, routers,
 
 The experiment asks whether a networked system only degrades under targeted disruption, or whether some topologies can show improved stochastic transport after damage.
 
-The Exgentic experiment makes this AI connection concrete by reconstructing a graph from observed LLM-agent execution traces and tool interactions rather than relying only on general-purpose network datasets.
+The two AI-domain experiments make this connection concrete rather than relying only on general-purpose network datasets. Exgentic reconstructs an observed agent/tool graph from LLM-agent execution traces, while Real Pi reconstructs an observed coding-agent graph from real human-AI coding sessions and actual tool use.
 
-The Exgentic result is intentionally important even though it is negative: the observed agent/tool graph does not satisfy the strict Antifragility criteria. This shows that the method does not assume that networked AI systems become better under damage and that the effect depends on the actual topology and transport process.
+Neither AI-domain graph satisfies the strict Antifragility criteria, but they fail for different reasons. Exgentic shows essentially no absolute hitting-time improvement. Real Pi shows substantial nominal improvement and a statistically significant preferential-versus-random advantage, but that apparent benefit does not survive the same-network size-matched control. Together, these results show why nominal post-damage improvement alone is not enough and why the same decision criteria must be retained across domains.
 
 ## Important Concepts
 
@@ -189,9 +190,9 @@ The notebook does not assume that Antifragility is universal.
 
 Some SNAP networks show controlled improvements in Markovian transport, while others do not.
 
-The Exgentic agent/tool graph also does not show a controlled anti-fragile response.
+The Exgentic and Real Pi AI-agent graphs also do not show controlled anti-fragile responses under the strict criteria.
 
-This means the outcome depends on the structure of the network being evaluated.
+This means the outcome depends on the structure of the network being evaluated and on whether the apparent benefit survives the required controls.
 
 ### Metric Dependence
 
@@ -210,7 +211,7 @@ This is an important distinction when evaluating networked AI systems.
 
 ## Notebook Cells
 
-The notebook contains six main code cells.
+The notebook contains seven main code cells.
 
 ### Cell 1 — Primary SNAP Experiment
 
@@ -301,6 +302,69 @@ The baseline largest connected component contains:
 497 nodes
 3,822 edges
 ```
+
+
+### Cell 7 — Real Pi Coding-Agent Validation
+
+Loads the real coding-agent session repository:
+
+```text
+MaxDevv/real-pi-coding-agent-traces-sessions
+```
+
+The repository contains 1,291 session files. For conservative provenance, the code excludes 38 sessions whose source-dataset names contain `synthetic`, leaving:
+
+```text
+1,253 selected real session files
+1,130 sessions with observed tool calls
+173,267 observed tool calls
+46 unique observed tools
+```
+
+The observed baseline largest connected component contains:
+
+```text
+1,172 nodes
+3,328 edges
+```
+
+The graph is built only from observed relationships:
+
+```text
+session -> tool use
+tool -> tool consecutive transition
+```
+
+No synthetic graph generator is used, and no synthetic nodes or edges are introduced.
+
+The Real Pi experiment uses the same locked design as the other domain validation:
+
+```text
+30 independent trials
+5% to 45% progressive damage
+matched random damage
+10%, 20%, 30%, and 40% size-matched controls
+24 Hutchinson probes
+independent trial-level inference
+confirmatory global efficiency
+```
+
+The completed run produced:
+
+```text
+maximum mean hitting-time improvement = 17.993564%
+best damage level                     = 45%
+levels with >=2% improvement          = 7/9
+preferential vs random p              = 0.009264740162
+H_pref / H_size                       = 1.030131
+size-control 95% CI                   = [1.026523, 1.033738]
+size-control p                        = 1.0
+E_pref / E_size                       = 0.936622
+global-efficiency size-control p      = 1.0
+strict classification                 = Unsupported under strict controls
+```
+
+The result is important because the preferential trajectory beats matched random damage, but the damaged graph does not outperform an undamaged same-size graph from the same real topology.
 
 ## Damage Model
 
@@ -401,6 +465,7 @@ email-Eu-core       30
 Wiki-Vote           20
 CollegeMsg          30
 Exgentic             30
+Real Pi              30
 ```
 
 ## SNAP Data Sources
@@ -436,6 +501,26 @@ tool transitions
 
 No synthetic nodes or edges are added.
 
+
+## Real Pi Data Source
+
+```text
+https://huggingface.co/datasets/MaxDevv/real-pi-coding-agent-traces-sessions
+```
+
+The raw JSONL session files are downloaded directly from the Hugging Face repository and saved to Google Drive.
+
+For conservative provenance, 38 sessions whose source-dataset names contain `synthetic` are excluded before graph construction. The retained graph uses only observed:
+
+```text
+session-tool use
+consecutive tool-tool transitions
+```
+
+The completed validation uses 1,253 selected real session files, including 1,130 sessions with observed tool calls and 173,267 observed tool calls.
+
+No synthetic graph generators, synthetic nodes, synthetic edges, or hardcoded empirical outcomes are used.
+
 ## Google Drive Output Paths
 
 Base directory:
@@ -460,6 +545,24 @@ Exgentic results:
 
 ```text
 ai_domain_validation_exgentic/
+```
+
+Real Pi results:
+
+```text
+ai_domain_validation_real_pi/
+```
+
+Real Pi raw session snapshot:
+
+```text
+ai_domain_validation_real_pi/raw_dataset/sessions/
+```
+
+Real Pi PNG figures:
+
+```text
+ai_domain_validation_real_pi/figures_png/
 ```
 
 ## Main Output Files
@@ -528,9 +631,34 @@ domain_structure_table.tex
 RESULTS_SUMMARY.txt
 ```
 
+
+Real Pi outputs:
+
+```text
+dataset_provenance.csv
+session_provenance.csv
+excluded_sources_conservative_filter.csv
+session_extraction_audit.csv
+network_structure.csv
+baseline_transport.csv
+real_pi_agent_nodes.csv
+real_pi_agent_edges.csv
+real_pi_agent_graph.graphml
+ai_domain_raw.csv
+curve_statistics.csv
+trial_sustained_scores.csv
+preferential_vs_random.csv
+size_matched_pair_level.csv
+size_matched_trial_level.csv
+size_matched_controls.csv
+network_summary.csv
+RESULTS_SUMMARY.txt
+AUDIT.txt
+```
+
 ## Figures
 
-The notebook produces primary and confirmatory figures and collects the final PNG files.
+The notebook produces primary and confirmatory figures for the SNAP experiments and separate PNG validation figures for Exgentic and Real Pi.
 
 The Exgentic cell creates:
 
@@ -543,6 +671,20 @@ exgentic_agenttool_global_efficiency_size_control.png
 exgentic_agenttool_node_type_composition.png
 ```
 
+The Real Pi cell creates:
+
+```text
+real_pi_preferential_vs_random.png
+real_pi_lcc_retention.png
+real_pi_size_matched_ht.png
+real_pi_global_efficiency_pref_vs_random.png
+real_pi_global_efficiency_size_control.png
+real_pi_node_type_composition.png
+real_pi_observed_tool_usage.png
+```
+
+All Real Pi figures are written as PNG files only.
+
 ## Python Requirements
 
 ```text
@@ -553,13 +695,14 @@ networkx
 matplotlib
 requests
 datasets
+huggingface_hub
 PyMuPDF
 ```
 
 Install manually if needed:
 
 ```bash
-pip install numpy pandas scipy networkx matplotlib requests datasets pymupdf
+pip install numpy pandas scipy networkx matplotlib requests datasets huggingface_hub pymupdf
 ```
 
 ## How to Run
@@ -582,6 +725,10 @@ Hutchinson probes are numerical approximation samples and are not treated as ind
 
 The notebook preserves the original embedded outputs, but rerunning the fixed notebook regenerates the corrected trial-level statistical outputs.
 
+Both AI-domain validations use the same strict decision logic rather than tuning thresholds after observing the results.
+
+The Real Pi validation stores the raw JSONL session files, manifest-based provenance, SHA-256 hashes, extraction audit, raw graph files, trial-level controls, and final audit in Google Drive.
+
 ## Data Integrity
 
 The notebook checks that:
@@ -594,6 +741,9 @@ LCC fractions are valid
 damage types are valid
 no synthetic graph generators are used
 no empirical outcomes are hardcoded
+Real Pi synthetic-labeled source sessions are excluded before analysis
+Real Pi graph edges come only from observed session-tool use and tool transitions
+Real Pi figure outputs are PNG only
 ```
 
 ## License
