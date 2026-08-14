@@ -1,0 +1,52 @@
+REAL PI SECOND AI-DOMAIN VALIDATION
+====================================
+
+Dataset:
+MaxDevv/real-pi-coding-agent-traces-sessions
+https://huggingface.co/datasets/MaxDevv/real-pi-coding-agent-traces-sessions
+
+Dataset provenance:
+repository JSONL sessions found=1291
+sessions excluded by conservative synthetic-name filter=38
+selected session files=1253
+sessions with observed tool calls=1130
+observed tool calls=173267
+unique observed tools=46
+malformed JSONL lines skipped=0
+
+Baseline LCC:
+nodes=1172
+edges=3328
+modularity=0.168495
+
+Primary Markovian result:
+maximum mean improvement=17.993564%
+best damage=45.0%
+levels >=2% improvement=7/9
+sustained preferential AF=0.073168
+sustained random AF=0.069543
+preferential vs random p=0.009264740162
+rank-biserial=0.488172
+LCC retention at best=0.814249
+
+Independent-trial size control:
+H_pref/H_size=1.030131
+95% CI=[1.026523,1.033738]
+p=1
+rank-biserial benefit=-1.000000
+
+Confirmatory global efficiency:
+E_pref/E_size=0.936622
+95% CI=[0.933083,0.940160]
+p=1
+rank-biserial benefit=-1.000000
+
+STRICT CLASSIFICATION:
+Unsupported under strict controls
+
+Integrity:
+Synthetic graph generators: NONE
+Hardcoded empirical outcomes: NONE
+Source-name conservative filter: sources containing "synthetic" EXCLUDED
+Graph edges: observed session-tool use and observed consecutive tool transitions only
+Figures: PNG ONLY
