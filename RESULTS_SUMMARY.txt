@@ -1,0 +1,35 @@
+DOMAIN-SPECIFIC AI SECURITY VALIDATION — EXGENTIC AGENT/TOOL GRAPH
+
+Dataset: Exgentic/agent-llm-traces-v2
+URL: https://huggingface.co/datasets/Exgentic/agent-llm-traces-v2
+
+Traces processed: 10,056
+Spans processed: 241,473
+Observed tool calls: 160,669
+Baseline LCC: 497 nodes, 3,822 edges
+
+Primary Markovian result:
+  max mean improvement: -1.4239%
+  best damage fraction: 0.05
+  levels >=2% improvement: 0/9
+  sustained preferential AF: 0.000087
+  sustained random AF: 0.000000
+  preferential vs random p: 0.03980790073
+  rank-biserial: 0.866667
+  LCC retention at best: 0.999732
+
+Independent-trial size control:
+  H_pref/H_size: 1.074018
+  95% CI: [1.068496, 1.079539]
+  one-sided p: 1
+  rank-biserial benefit: -1.000000
+
+Confirmatory global efficiency:
+  E_pref/E_size: 0.820397
+  95% CI: [0.815609, 0.825186]
+  one-sided p: 1
+  rank-biserial benefit: -1.000000
+
+Classification: Unsupported under strict controls
+
+IMPORTANT: This result has NOT been merged into the manuscript. Review first, then update the paper.
