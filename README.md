@@ -1,4 +1,4 @@
-# Markovian Anti-Fragility POC
+# Markovian Antifragility POC
 
 This repository contains a Google Colab notebook for evaluating Markovian transport under progressive edge damage on real network data and an observed agent/tool interaction graph.
 
@@ -76,21 +76,21 @@ The experiment asks whether a networked system only degrades under targeted disr
 
 The Exgentic experiment makes this AI connection concrete by reconstructing a graph from observed LLM-agent execution traces and tool interactions rather than relying only on general-purpose network datasets.
 
-The Exgentic result is intentionally important even though it is negative: the observed agent/tool graph does not satisfy the strict anti-fragility criteria. This shows that the method does not assume that networked AI systems become better under damage and that the effect depends on the actual topology and transport process.
+The Exgentic result is intentionally important even though it is negative: the observed agent/tool graph does not satisfy the strict Antifragility criteria. This shows that the method does not assume that networked AI systems become better under damage and that the effect depends on the actual topology and transport process.
 
 ## Important Concepts
 
-### Anti-Fragility
+### Antifragility
 
-Anti-fragility is stronger than robustness or resilience.
+Antifragility is stronger than robustness or resilience.
 
 ```text
 robustness   -> performance degrades only slightly under stress
 resilience   -> performance recovers after stress
-anti-fragility -> some measured property improves under stress
+Antifragility -> some measured property improves under stress
 ```
 
-In this notebook, anti-fragility refers specifically to improved **Markovian transport**, measured by lower average random-walk hitting time after damage.
+In this notebook, Antifragility refers specifically to improved **Markovian transport**, measured by lower average random-walk hitting time after damage.
 
 It does not mean that the full AI system becomes more accurate, safer, or better at completing tasks.
 
@@ -139,7 +139,7 @@ After damage, the notebook evaluates the largest connected component.
 
 This is necessary because hitting time is defined on connected graphs.
 
-The notebook also records how much of the original graph remains connected so that an apparent improvement is not mistaken for anti-fragility when the graph has simply collapsed to a tiny residual component.
+The notebook also records how much of the original graph remains connected so that an apparent improvement is not mistaken for Antifragility when the graph has simply collapsed to a tiny residual component.
 
 ### Size-Matched Control
 
@@ -185,7 +185,7 @@ That distinction is important for AI systems because different architectures may
 
 ### Topology Dependence
 
-The notebook does not assume that anti-fragility is universal.
+The notebook does not assume that Antifragility is universal.
 
 Some SNAP networks show controlled improvements in Markovian transport, while others do not.
 
@@ -252,7 +252,7 @@ It also applies the corrected trial-level size-control analysis.
 
 ### Cell 3 — Structural Analysis
 
-Computes descriptive Spearman associations between sustained anti-fragility and network characteristics such as:
+Computes descriptive Spearman associations between sustained Antifragility and network characteristics such as:
 
 ```text
 modularity
